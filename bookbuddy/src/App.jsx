@@ -1,29 +1,62 @@
-import {React, useState} from 'react';
-import FriendCard from './components/FriendCard';
-import Wrapper from './components/Wrapper';
-import Title from './components/Title';
-import friendData from './friends.json';
+import React, { useState } from 'react';
+
+function SearchBar({ onSearch }) {
+  const [query, setQuery] = useState('');
+
+  const handleSearch = () => {
+    onSearch(query);
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search for books..."
+      />
+      <button onClick={handleSearch}>Search</button>
+    </div>
+  );
+}
+
+function BookList({ books }) {
+  return (
+    <div>
+      <h2>Search Results</h2>
+      <ul>
+        {books.map((book) => (
+          <li key={book.id}>
+            <h3>{book.volumeInfo.title}</h3>
+            <p>Authors: {book.volumeInfo.authors.join(', ')}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 function App() {
-  const [ friends, setFriends ] = useState(friendData);
+  const [searchResults, setSearchResults] = useState([]);
 
-  function removeFriends(id) {
-    const newFriends = friends.filter((friend) => friend.id !==id)
-    setFriends(newFriends);
-  }
+  const handleSearch = async (query) => {
+    try {
+      const response = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`
+      );
+      const data = await response.json();
+      setSearchResults(data.items || []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   return (
-    <Wrapper>
-      <Title>Friends List</Title>
-      {friends.map(f => (
-      <FriendCard
-        name={f.name}
-        image={f.image}
-        occupation={f.occupation}
-        location={f.location}
-        myRemoveFriend={() => removeFriends(f.id)}
-      />
-      ))}
-    </Wrapper>
+    <div>
+      <h1>BookBuddy</h1>
+      <SearchBar onSearch={handleSearch} />
+      <BookList books={searchResults} />
+    </div>
   );
 }
 
