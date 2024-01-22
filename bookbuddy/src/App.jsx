@@ -28,6 +28,12 @@ function BookList({ books }) {
         {books.map((book) => (
           <li key={book.id}>
             <h3>{book.volumeInfo.title}</h3>
+            {book.volumeInfo.imageLinks && (
+              <img
+                src={book.volumeInfo.imageLinks.thumbnail}
+                alt={book.volumeInfo.title}
+              />
+            )}
             <p>Authors: {book.volumeInfo.authors.join(', ')}</p>
           </li>
         ))}
