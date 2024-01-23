@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // SearchBar component for input and search button
 function SearchBar({ onSearch }) {
@@ -81,6 +81,12 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
+  // Load favorites from local storage on component mount
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    setFavorites(storedFavorites);
+  }, []);
+
   // Handler for search functionality
   const handleSearch = async (query) => {
     try {
@@ -96,14 +102,16 @@ function App() {
 
   // Function to add a book to favorites
   const addToFavorites = (book) => {
-    setFavorites((prevFavorites) => [...prevFavorites, book]);
+    const updatedFavorites = [...favorites, book];
+    setFavorites(updatedFavorites);
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
 
   // Function to remove a book from favorites
   const removeFromFavorites = (book) => {
-    setFavorites((prevFavorites) =>
-      prevFavorites.filter((favorite) => favorite.id !== book.id)
-    );
+    const updatedFavorites = favorites.filter((favorite) => favorite.id !== book.id);
+    setFavorites(updatedFavorites);
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
 
   return (
