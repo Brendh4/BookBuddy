@@ -1,89 +1,21 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
+import StickyNav from 'react-sticky-nav';
+import BookList from './components/BookList';
+import FavoritesList from './components/FavouritesList';
+import SearchBar from './components/SearchBar';
+import ReadingList from './components/ReadingList';
 
-// SearchBar component for input and search button
-function SearchBar({ onSearch }) {
-  const [query, setQuery] = useState('');
-
-  // Handler for search button click
-  const handleSearch = () => {
-    onSearch(query);
-  };
-
-  return (
-    <div>
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search for books..."
-      />
-      <button onClick={handleSearch}>Search</button>
-    </div>
-  );
-}
-
-// BookList component to display search results
-function BookList({ books, onAddToFavorites }) {
-  return (
-    <div>
-      <h2>Search Results</h2>
-      <ul>
-        {books.map((book) => (
-          <li key={book.id}>
-            <h3>{book.volumeInfo.title}</h3>
-            {/* Display book thumbnail if available */}
-            {book.volumeInfo.imageLinks && (
-              <img
-                src={book.volumeInfo.imageLinks.thumbnail}
-                alt={book.volumeInfo.title}
-              />
-            )}
-            <p>Authors: {book.volumeInfo.authors.join(', ')}</p>
-            {/* Button to add book to favorites */}
-            <button onClick={() => onAddToFavorites(book)}>Add to Favorites</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-// FavoritesList component to display favorite books
-function FavoritesList({ favorites, onRemoveFromFavorites }) {
-  return (
-    <div>
-      <h2>My Favorites</h2>
-      <ul>
-        {favorites.map((favorite) => (
-          <li key={favorite.id}>
-            <h3>{favorite.volumeInfo.title}</h3>
-            {/* Display favorite book thumbnail if available */}
-            {favorite.volumeInfo.imageLinks && (
-              <img
-                src={favorite.volumeInfo.imageLinks.thumbnail}
-                alt={favorite.volumeInfo.title}
-              />
-            )}
-            <p>Authors: {favorite.volumeInfo.authors.join(', ')}</p>
-            {/* Button to remove book from favorites */}
-            <button onClick={() => onRemoveFromFavorites(favorite)}>
-              Remove from Favorites
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-// App component, the main application component
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [readingList, setReadingList] = useState([]);
 
   // Load favorites from local storage on component mount
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const storedReadingList = JSON.parse(localStorage.getItem('readingList')) || [];
+    setReadingList(storedReadingList);
     setFavorites(storedFavorites);
   }, []);
 
@@ -114,12 +46,46 @@ function App() {
     localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
 
+  // Function to add a book to Reading List
+  const addToReadingList = (book) => {
+  const updatedReadingList = [...readingList, book];
+  setReadingList(updatedReadingList);
+  localStorage.setItem('readingList', JSON.stringify(updatedReadingList));
+};
+
+  // Function to remove a book from Reading List
+  const removeFromReadingList = (book) => {
+  const updatedReadingList = readingList.filter((item) => item.id !== book.id);
+  setReadingList(updatedReadingList);
+  localStorage.setItem('readingList', JSON.stringify(updatedReadingList));
+};
+
   return (
-    <div>
-      <h1>BookBuddy</h1>
-      <SearchBar onSearch={handleSearch} />
-      <BookList books={searchResults} onAddToFavorites={addToFavorites} />
-      <FavoritesList favorites={favorites} onRemoveFromFavorites={removeFromFavorites} />
+    <div className="container mt-4">
+      <StickyNav style={{ top: 0, zIndex: 1000 }}>
+        <div className="row align-items-center justify-content-center">
+          <div className="col-md-4 text-center">
+            <h1>BookBuddy</h1>
+          </div>
+          <div className="col-md-4 text-center">
+            <SearchBar onSearch={handleSearch} />
+          </div>
+        </div>
+      </StickyNav>
+
+      <div className="row" style={{ marginTop: '80px' }}>
+        <div className="col-md-4">
+        <BookList books={searchResults} onAddToFavorites={addToFavorites} onAddToReadingList={addToReadingList} />
+        </div>
+
+        <div className="col-md-4">
+          <FavoritesList favorites={favorites} onRemoveFromFavorites={removeFromFavorites} />
+        </div>
+
+        <div className="col-md-4">
+          <ReadingList readingList={readingList} onRemoveFromReadingList={removeFromReadingList} />
+                </div>
+      </div>
     </div>
   );
 }
