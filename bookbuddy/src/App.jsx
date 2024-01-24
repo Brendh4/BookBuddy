@@ -6,10 +6,6 @@ import FavoritesList from './components/FavouritesList';
 import SearchBar from './components/SearchBar';
 import ReadingList from './components/ReadingList';
 
-
-//test
-
-
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -52,26 +48,26 @@ function App() {
 
   // Function to add a book to Reading List
   const addToReadingList = (book) => {
-  const updatedReadingList = [...readingList, book];
-  setReadingList(updatedReadingList);
-  localStorage.setItem('readingList', JSON.stringify(updatedReadingList));
-};
+    const updatedReadingList = [...readingList, book];
+    setReadingList(updatedReadingList);
+    localStorage.setItem('readingList', JSON.stringify(updatedReadingList));
+  };
 
   // Function to remove a book from Reading List
   const removeFromReadingList = (book) => {
-  const updatedReadingList = readingList.filter((item) => item.id !== book.id);
-  setReadingList(updatedReadingList);
-  localStorage.setItem('readingList', JSON.stringify(updatedReadingList));
-};
+    const updatedReadingList = readingList.filter((item) => item.id !== book.id);
+    setReadingList(updatedReadingList);
+    localStorage.setItem('readingList', JSON.stringify(updatedReadingList));
+  };
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 bg-light p-4 rounded">
       <StickyNav style={{ top: 0, zIndex: 1000 }}>
         <div className="row align-items-center justify-content-center">
-          <div className="col-md-4 text-center">
-            <h1>BookBuddy</h1>
+          <div className="col-md-6 text-center">
+            <h1 className="text-primary">BookBuddy</h1>
           </div>
-          <div className="col-md-4 text-center">
+          <div className="col-md-10 text-center">
             <SearchBar onSearch={handleSearch} />
           </div>
         </div>
@@ -79,16 +75,26 @@ function App() {
 
       <div className="row" style={{ marginTop: '80px' }}>
         <div className="col-md-4">
-        <BookList books={searchResults} onAddToFavorites={addToFavorites} onAddToReadingList={addToReadingList} />
+          <BookList
+            books={searchResults}
+            onAddToFavorites={addToFavorites}
+            onAddToReadingList={addToReadingList}
+          />
         </div>
 
         <div className="col-md-4">
-          <FavoritesList favorites={favorites} onRemoveFromFavorites={removeFromFavorites} />
+          <FavoritesList
+            favorites={favorites}
+            onRemoveFromFavorites={removeFromFavorites}
+          />
         </div>
 
         <div className="col-md-4">
-          <ReadingList readingList={readingList} onRemoveFromReadingList={removeFromReadingList} />
-                </div>
+          <ReadingList
+            readingList={readingList}
+            onRemoveFromReadingList={removeFromReadingList}
+          />
+        </div>
       </div>
     </div>
   );

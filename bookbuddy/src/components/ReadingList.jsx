@@ -8,7 +8,7 @@ function ReadingList({ readingList, onRemoveFromReadingList }) {
         <ul className='list-group'>
         {readingList.map((book) => (
             <li key={book.id} className='list-group-item'>
-            <h3>{book.volumeInfo.title}</h3>
+            <h5>{book.volumeInfo.title}</h5>
             {/* Display book thumbnail if available */}
             {book.volumeInfo.imageLinks && (
                 <img 
@@ -18,7 +18,7 @@ function ReadingList({ readingList, onRemoveFromReadingList }) {
             )}
             <p>Authors: {book.volumeInfo.authors.join(', ')}</p>
             {/* Button to remove book from Reading List */}
-            <button onClick={() => onRemoveFromReadingList(book)} className='btn btn-danger'> Remove from Reading List</button>
+            <button onClick={() => onRemoveFromReadingList(book)} className='btn btn-danger btn-sm'> Remove from Reading List</button>
             </li>
         ))}
         </ul>

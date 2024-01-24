@@ -8,7 +8,7 @@ function FavoritesList({ favorites, onRemoveFromFavorites }) {
         <ul className='list-group'>
         {favorites.map((favorite) => (
             <li key={favorite.id} className='list-group-item'>
-            <h3>{favorite.volumeInfo.title}</h3>
+            <h5>{favorite.volumeInfo.title}</h5>
               {/* Display favorite book thumbnail if available */}
             {favorite.volumeInfo.imageLinks && (
                 <img
@@ -18,7 +18,7 @@ function FavoritesList({ favorites, onRemoveFromFavorites }) {
             )}
             <p>Authors: {favorite.volumeInfo.authors.join(', ')}</p>
               {/* Button to remove book from favorites */}
-            <button onClick={() => onRemoveFromFavorites(favorite)} className='btn btn-danger'>
+            <button onClick={() => onRemoveFromFavorites(favorite)} className='btn btn-danger btn-sm'>
                 Remove from Favorites
             </button>
             </li>

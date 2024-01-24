@@ -17,7 +17,7 @@ function SearchBar({ onSearch }) {
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for books..."
         />
-        <button onClick={handleSearch} className='btn btn-primary mt-1'>Search</button>
+        <button onClick={handleSearch} className='btn btn-primary mt-1 btn-sm'>Search</button>
     </div>
     );
 }

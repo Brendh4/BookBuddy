@@ -8,3 +8,12 @@ html, body, #root {
   margin: 0;
   height: 100%;
 }
+
+body {
+  background-image: url('/bookbuddy/public/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  margin: 0;
+}
