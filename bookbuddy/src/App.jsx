@@ -1,11 +1,10 @@
-/////testing!!!!!!!!!!!!!!
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
+import StickyNav from 'react-sticky-nav';
 import BookList from './components/BookList';
 import FavoritesList from './components/FavouritesList';
 import SearchBar from './components/SearchBar';
 
-// App component, the main application component
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -45,16 +44,22 @@ function App() {
 
   return (
     <div className="container mt-4">
-      <div className="row">
-        <div className="col-md-4">
-          <h1 className="text-center">BookBuddy</h1>
-          <SearchBar onSearch={handleSearch} />
+      <StickyNav>
+        <div className="row align-items-center justify-content-center">
+          <div className="col-md-4 text-center">
+            <h1>BookBuddy</h1>
+          </div>
+          <div className="col-md-4 text-center">
+            <SearchBar onSearch={handleSearch} />
+          </div>
         </div>
-  
+      </StickyNav>
+
+      <div className="row">
         <div className="col-md-4">
           <BookList books={searchResults} onAddToFavorites={addToFavorites} />
         </div>
-  
+
         <div className="col-md-4">
           <FavoritesList favorites={favorites} onRemoveFromFavorites={removeFromFavorites} />
         </div>
