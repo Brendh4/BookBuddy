@@ -4,19 +4,19 @@ import StickyNav from 'react-sticky-nav';
 import BookList from './components/BookList';
 import FavoritesList from './components/FavouritesList';
 import SearchBar from './components/SearchBar';
-import ToReadList from './components/ToReadList';
+import ReadingList from './components/ReadingList';
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [toRead, setToRead] = useState([]);
+  const [readingList, setReadingList] = useState([]);
 
   // Load favorites from local storage on component mount
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    const storedToRead = JSON.parse(localStorage.getItem('toRead')) || [];
+    const storedReadingList = JSON.parse(localStorage.getItem('readingList')) || [];
+    setReadingList(storedReadingList);
     setFavorites(storedFavorites);
-    setToRead(storedToRead);
   }, []);
 
   // Handler for search functionality
@@ -46,20 +46,19 @@ function App() {
     localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
 
-  // Function to add a book to ToRead
-  const addToToRead = (book) => {
-    const updatedToRead = [...toRead, book];
-    setToRead(updatedToRead);
-    localStorage.setItem('toRead', JSON.stringify(updatedToRead));
-  };
+  // Function to add a book to Reading List
+  const addToReadingList = (book) => {
+  const updatedReadingList = [...readingList, book];
+  setReadingList(updatedReadingList);
+  localStorage.setItem('readingList', JSON.stringify(updatedReadingList));
+};
 
-  // Function to remove a book from ToRead
-  const removeFromToRead = (book) => {
-    const updatedToRead = toRead.filter((item) => item.id !== book.id);
-    setToRead(updatedToRead);
-    localStorage.setItem('toRead', JSON.stringify(updatedToRead));
-  };
-
+  // Function to remove a book from Reading List
+  const removeFromReadingList = (book) => {
+  const updatedReadingList = readingList.filter((item) => item.id !== book.id);
+  setReadingList(updatedReadingList);
+  localStorage.setItem('readingList', JSON.stringify(updatedReadingList));
+};
 
   return (
     <div className="container mt-4">
@@ -76,7 +75,7 @@ function App() {
 
       <div className="row" style={{ marginTop: '80px' }}>
         <div className="col-md-4">
-          <BookList books={searchResults} onAddToFavorites={addToFavorites} />
+        <BookList books={searchResults} onAddToFavorites={addToFavorites} onAddToReadingList={addToReadingList} />
         </div>
 
         <div className="col-md-4">
@@ -84,8 +83,8 @@ function App() {
         </div>
 
         <div className="col-md-4">
-          <ToReadList toRead={toRead} onRemoveFromToRead={removeFromToRead} />
-        </div>
+          <ReadingList readingList={readingList} onRemoveFromReadingList={removeFromReadingList} />
+                </div>
       </div>
     </div>
   );

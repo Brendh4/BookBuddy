@@ -1,7 +1,7 @@
 import React from 'react';
 
 // BookList component to display search results
-function BookList({ books, onAddToFavorites }) {
+function BookList({ books, onAddToFavorites, onAddToReadingList }) {
     return (
     <div>
         <h2>Search Results</h2>
@@ -17,8 +17,10 @@ function BookList({ books, onAddToFavorites }) {
                 />
             )}
             <p>Authors: {book.volumeInfo.authors.join(', ')}</p>
-              {/* Button to add book to favorites */}
+            {/* Button to add book to favorites */}
             <button onClick={() => onAddToFavorites(book)} className='btn btn-success'>Add to Favorites</button>
+            {/* Button to add book to Reading List */}
+            <button onClick={() => onAddToReadingList(book)} className='btn btn-success'>Add to Reading List</button>
             </li>
         ))}
         </ul>
