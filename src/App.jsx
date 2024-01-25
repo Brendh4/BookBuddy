@@ -5,10 +5,7 @@ import BookList from './components/BookList';
 import FavoritesList from './components/FavouritesList';
 import SearchBar from './components/SearchBar';
 import ReadingList from './components/ReadingList';
-
-
-//test
-
+import './main.css'; 
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
@@ -65,33 +62,33 @@ function App() {
 };
 
   return (
-    <div className="container mt-4">
-      <StickyNav style={{ top: 0, zIndex: 1000 }}>
-        <div className="row align-items-center justify-content-center">
-          <div className="col-md-4 text-center">
-            <h1>BookBuddy</h1>
-          </div>
-          <div className="col-md-4 text-center">
-            <SearchBar onSearch={handleSearch} />
-          </div>
+  <div className='container mt-4'>
+    <StickyNav className='sticky-nav'>
+      <div className='row align-items-center justify-content-center'>
+        <div className='col-md-6 text-center'>
+        <h1>BookBuddy</h1>
         </div>
-      </StickyNav>
-
-      <div className="row" style={{ marginTop: '80px' }}>
-        <div className="col-md-4">
-        <BookList books={searchResults} onAddToFavorites={addToFavorites} onAddToReadingList={addToReadingList} />
-        </div>
-
-        <div className="col-md-4">
-          <FavoritesList favorites={favorites} onRemoveFromFavorites={removeFromFavorites} />
-        </div>
-
-        <div className="col-md-4">
-          <ReadingList readingList={readingList} onRemoveFromReadingList={removeFromReadingList} />
-                </div>
+        <div className='col-md-4 text-center'>
+        <SearchBar onSearch={handleSearch} />
       </div>
     </div>
-  );
+  </StickyNav>
+
+  <div className='row' style={{ marginTop: '80px' }}>
+    <div className='col-md-4'>
+      <BookList books={searchResults} onAddToFavorites={addToFavorites} onAddToReadingList={addToReadingList} />
+      </div>
+
+      <div className='col-md-4'>
+      <FavoritesList favorites={favorites} onRemoveFromFavorites={removeFromFavorites} />
+        </div>
+
+      <div className='col-md-4'>
+      <ReadingList readingList={readingList} onRemoveFromReadingList={removeFromReadingList} />
+      </div>
+    </div>
+  </div>
+);
 }
 
 export default App;

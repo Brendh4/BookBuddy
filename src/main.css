@@ -8,3 +8,24 @@ html, body, #root {
   margin: 0;
   height: 100%;
 }
+
+body {
+  background-color: #f4f4bd95; 
+}
+
+.container {
+  background-color: #ffffff; 
+  border-radius: 15px;
+  padding: 20px;
+  position: relative;
+}
+
+.sticky-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #ffffff;
+  color: #202020;
+}
