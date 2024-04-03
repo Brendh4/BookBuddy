@@ -25,7 +25,7 @@ If your README is long, add a table of contents to make it easy for users to fin
 
 ## Installation
 
-Link to deployed application: ______________________
+Link to deployed application: [https://bookbuddyedx.netlify.app/](https://bookbuddyedx.netlify.app/)
 
 ## Usage
 
@@ -38,7 +38,7 @@ BookBuddy is straightforward to use:
 - Remove books from the lists if needed.
 
     ```md
-    ![Deployed application screenshot](assets/images/screenshot.png)
+    ![Deployed application screenshot](src/screenshot.PNG)
     ```
 
 ## Credits
