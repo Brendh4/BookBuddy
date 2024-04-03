@@ -37,7 +37,7 @@ BookBuddy is straightforward to use:
 - View and manage your Favorites and Reading List in the respective columns.
 - Remove books from the lists if needed.
 
-![Deployed webpage screenshot](src/screenshot.png)
+![Deployed webpage screenshot](src/screenshot.PNG)
 
 ## Credits
 
